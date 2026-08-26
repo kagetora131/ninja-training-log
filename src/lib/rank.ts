@@ -45,9 +45,10 @@ export function nextRankProgress(xp: number): {
 }
 
 export const CATEGORY_LABELS: Record<TrainingCategory, string> = {
-  exercise: '運動',
+  exercise: '稽古',
   study: '学習',
   reading: '読書',
+  meditation: '瞑想',
   other: 'その他',
 }
 
@@ -55,7 +56,14 @@ export const CATEGORY_DEFAULT_UNITS: Record<TrainingCategory, string> = {
   exercise: '分',
   study: '分',
   reading: 'ページ',
+  meditation: '分',
   other: '回',
 }
 
-export const CATEGORY_ORDER: TrainingCategory[] = ['exercise', 'study', 'reading', 'other']
+export const CATEGORY_ORDER: TrainingCategory[] = [
+  'exercise',
+  'study',
+  'reading',
+  'meditation',
+  'other',
+]

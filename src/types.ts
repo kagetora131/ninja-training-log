@@ -1,4 +1,4 @@
-export type TrainingCategory = 'exercise' | 'study' | 'reading' | 'other'
+export type TrainingCategory = 'exercise' | 'study' | 'reading' | 'meditation' | 'other'
 
 export interface TrainingLog {
   id: string
