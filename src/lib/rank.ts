@@ -1,6 +1,13 @@
 import type { TrainingCategory } from '../types'
 
-export const XP_PER_LOG = 20
+// DB側の calc_log_xp() 関数と同じ配分(カテゴリごとに固定XP)
+export const CATEGORY_XP: Record<TrainingCategory, number> = {
+  exercise: 15,
+  study: 20,
+  reading: 10,
+  meditation: 15,
+  other: 10,
+}
 
 export interface RankDef {
   rank: number

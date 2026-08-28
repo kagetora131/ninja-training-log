@@ -1,5 +1,5 @@
 import { lastNDatesJst } from './format'
-import { XP_PER_LOG } from './rank'
+import { CATEGORY_XP } from './rank'
 import type { TrainingLog } from '../types'
 
 export interface DailyPoint {
@@ -11,13 +11,14 @@ export interface DailyPoint {
 /** 直近n日分の、日別の獲得XP・記録件数を古い→新しい順で返す(記録が無い日は0埋め) */
 export function dailyTotals(logs: TrainingLog[], days: number): DailyPoint[] {
   const dates = lastNDatesJst(days)
-  const byDate = new Map<string, number>()
+  const byDate = new Map<string, { xp: number; count: number }>()
   for (const log of logs) {
-    byDate.set(log.log_date, (byDate.get(log.log_date) ?? 0) + 1)
+    const prev = byDate.get(log.log_date) ?? { xp: 0, count: 0 }
+    byDate.set(log.log_date, { xp: prev.xp + CATEGORY_XP[log.category], count: prev.count + 1 })
   }
   return dates.map((date) => {
-    const count = byDate.get(date) ?? 0
-    return { date, xp: count * XP_PER_LOG, count }
+    const agg = byDate.get(date) ?? { xp: 0, count: 0 }
+    return { date, xp: agg.xp, count: agg.count }
   })
 }
 

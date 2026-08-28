@@ -1,0 +1,298 @@
+{
+  "_readme": {
+    "説明": "忍者修行ログアプリの開発用ダミーデータです。継続タイプ(u01)・三日坊主タイプ(u02)・直近サボりタイプ(u03)の3ユーザーを用意し、ストリーク計算やランク判定のテストがしやすいようにしています。",
+    "rank_table": [
+      {
+        "rank": 1,
+        "required_xp": 0,
+        "title": "見習い忍者"
+      },
+      {
+        "rank": 2,
+        "required_xp": 100,
+        "title": "下忍"
+      },
+      {
+        "rank": 3,
+        "required_xp": 300,
+        "title": "中忍"
+      },
+      {
+        "rank": 4,
+        "required_xp": 700,
+        "title": "上忍"
+      },
+      {
+        "rank": 5,
+        "required_xp": 1500,
+        "title": "忍者頭領"
+      }
+    ],
+    "xp_per_category": {
+      "運動": 15,
+      "学習": 20,
+      "読書": 10
+    },
+    "基準日": "2026-08-14"
+  },
+  "users": [
+    {
+      "id": "u01",
+      "email": "kenta.sato@example.com",
+      "display_name": "けんた"
+    },
+    {
+      "id": "u02",
+      "email": "aiko.yamada@example.com",
+      "display_name": "あいこ"
+    },
+    {
+      "id": "u03",
+      "email": "ryo.tanaka@example.com",
+      "display_name": "りょう"
+    }
+  ],
+  "training_logs": [
+    {
+      "id": "log001",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-01"
+    },
+    {
+      "id": "log002",
+      "user_id": "u01",
+      "category": "学習",
+      "amount_minutes": 45,
+      "xp_gained": 20,
+      "logged_at": "2026-08-02"
+    },
+    {
+      "id": "log003",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 20,
+      "xp_gained": 15,
+      "logged_at": "2026-08-03"
+    },
+    {
+      "id": "log004",
+      "user_id": "u01",
+      "category": "読書",
+      "amount_minutes": 30,
+      "xp_gained": 10,
+      "logged_at": "2026-08-04"
+    },
+    {
+      "id": "log005",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-05"
+    },
+    {
+      "id": "log006",
+      "user_id": "u01",
+      "category": "学習",
+      "amount_minutes": 60,
+      "xp_gained": 20,
+      "logged_at": "2026-08-06"
+    },
+    {
+      "id": "log007",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 25,
+      "xp_gained": 15,
+      "logged_at": "2026-08-07"
+    },
+    {
+      "id": "log008",
+      "user_id": "u01",
+      "category": "読書",
+      "amount_minutes": 20,
+      "xp_gained": 10,
+      "logged_at": "2026-08-08"
+    },
+    {
+      "id": "log009",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-09"
+    },
+    {
+      "id": "log010",
+      "user_id": "u01",
+      "category": "学習",
+      "amount_minutes": 40,
+      "xp_gained": 20,
+      "logged_at": "2026-08-10"
+    },
+    {
+      "id": "log011",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-11"
+    },
+    {
+      "id": "log012",
+      "user_id": "u01",
+      "category": "読書",
+      "amount_minutes": 25,
+      "xp_gained": 10,
+      "logged_at": "2026-08-12"
+    },
+    {
+      "id": "log013",
+      "user_id": "u01",
+      "category": "運動",
+      "amount_minutes": 35,
+      "xp_gained": 15,
+      "logged_at": "2026-08-13"
+    },
+    {
+      "id": "log014",
+      "user_id": "u01",
+      "category": "学習",
+      "amount_minutes": 50,
+      "xp_gained": 20,
+      "logged_at": "2026-08-14"
+    },
+    {
+      "id": "log015",
+      "user_id": "u02",
+      "category": "学習",
+      "amount_minutes": 30,
+      "xp_gained": 20,
+      "logged_at": "2026-08-01"
+    },
+    {
+      "id": "log016",
+      "user_id": "u02",
+      "category": "学習",
+      "amount_minutes": 30,
+      "xp_gained": 20,
+      "logged_at": "2026-08-02",
+      "memo": "備考: この日を最後に4日間空く"
+    },
+    {
+      "id": "log017",
+      "user_id": "u02",
+      "category": "運動",
+      "amount_minutes": 20,
+      "xp_gained": 15,
+      "logged_at": "2026-08-07",
+      "memo": "備考: 5日ぶりの記録"
+    },
+    {
+      "id": "log018",
+      "user_id": "u02",
+      "category": "運動",
+      "amount_minutes": 20,
+      "xp_gained": 15,
+      "logged_at": "2026-08-08"
+    },
+    {
+      "id": "log019",
+      "user_id": "u02",
+      "category": "読書",
+      "amount_minutes": 15,
+      "xp_gained": 10,
+      "logged_at": "2026-08-12",
+      "memo": "備考: また間隔が空いている"
+    },
+    {
+      "id": "log020",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-01"
+    },
+    {
+      "id": "log021",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-02"
+    },
+    {
+      "id": "log022",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-03"
+    },
+    {
+      "id": "log023",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-04"
+    },
+    {
+      "id": "log024",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-05"
+    },
+    {
+      "id": "log025",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-06"
+    },
+    {
+      "id": "log026",
+      "user_id": "u03",
+      "category": "運動",
+      "amount_minutes": 30,
+      "xp_gained": 15,
+      "logged_at": "2026-08-07",
+      "memo": "備考: 7連続記録達成後、以降記録なし"
+    }
+  ],
+  "user_progress": [
+    {
+      "user_id": "u01",
+      "total_xp": 215,
+      "current_rank": 2,
+      "current_rank_title": "下忍",
+      "current_streak_at_last_log": 14,
+      "last_logged_date": "2026-08-14",
+      "days_since_last_log_from_2026-08-14": 0
+    },
+    {
+      "user_id": "u02",
+      "total_xp": 80,
+      "current_rank": 1,
+      "current_rank_title": "見習い忍者",
+      "current_streak_at_last_log": 1,
+      "last_logged_date": "2026-08-12",
+      "days_since_last_log_from_2026-08-14": 2
+    },
+    {
+      "user_id": "u03",
+      "total_xp": 105,
+      "current_rank": 2,
+      "current_rank_title": "下忍",
+      "current_streak_at_last_log": 7,
+      "last_logged_date": "2026-08-07",
+      "days_since_last_log_from_2026-08-14": 7
+    }
+  ]
+}

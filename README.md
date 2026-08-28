@@ -54,7 +54,17 @@ user_progress           -- user_id, total_xp, current_rank, current_streak, long
 | 4 | 700 | 上忍 |
 | 5 | 1500 | 忍者頭領 |
 
-記録1件につき固定 +20 XP(CLAUDE.mdの方針どおり、連続記録ボーナス等は将来拡張)。
+記録1件ごとのXPはカテゴリ別(`calc_log_xp` / `src/lib/rank.ts`の`CATEGORY_XP`で定義、両者は同期させること):
+
+| カテゴリ | XP |
+|---|---|
+| 稽古 | 15 |
+| 学習 | 20 |
+| 読書 | 10 |
+| 瞑想 | 15 |
+| その他 | 10 |
+
+連続記録ボーナス等は将来拡張。
 
 ## 実装済みのMVP範囲
 
@@ -63,6 +73,21 @@ user_progress           -- user_id, total_xp, current_rank, current_streak, long
 3. XP計算・ランク判定(DBトリガーで自動計算、ランクアップ時にモーダル演出)
 4. 週次(直近7日・日別)・月次(直近4週・週別)グラフ(Recharts)
 5. 連続記録日数(ストリーク)・最長記録日数の表示
+
+## デモ用データ
+
+[`ninja_training_log_dummy_data.json`](ninja_training_log_dummy_data.json) を元に、Supabase上へ
+以下の3ユーザーを投入済み(パスワードは共通で `NinjaDemo2026`)。ストリーク計算・ランク判定の
+動作確認用。
+
+| メール | タイプ | 累計XP | ランク | 連続記録 |
+|---|---|---|---|---|
+| `kenta.sato@example.com` | 継続タイプ | 215 | 下忍 | 14日 |
+| `aiko.yamada@example.com` | 三日坊主タイプ | 80 | 見習い忍者 | 1日(最長2日) |
+| `ryo.tanaka@example.com` | 直近サボりタイプ | 105 | 下忍 | 7日(直近12日間記録なし) |
+
+このほか、記録が空のシンプルなデモアカウントとして `demo@ninja-training-log.invalid` /
+`NinjaDemo2026` も利用可能。
 
 ### 既知の簡易仕様
 

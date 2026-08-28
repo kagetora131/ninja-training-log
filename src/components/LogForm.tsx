@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { CATEGORY_DEFAULT_UNITS, CATEGORY_LABELS, CATEGORY_ORDER, XP_PER_LOG } from '../lib/rank'
+import { CATEGORY_DEFAULT_UNITS, CATEGORY_LABELS, CATEGORY_ORDER, CATEGORY_XP } from '../lib/rank'
 import type { TrainingCategory } from '../types'
 import type { NewLogInput } from '../hooks/useTrainingLogs'
 
@@ -44,7 +44,10 @@ export function LogForm({
       className="animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-6"
     >
       <h2 className="font-mincho text-lg font-bold text-paper">今日の修行を記録する</h2>
-      <p className="mt-1 text-xs text-paper-dim">記録1件につき +{XP_PER_LOG} XP</p>
+      <p className="mt-1 text-xs text-paper-dim">
+        この記録で <span className="text-gold">+{CATEGORY_XP[category]} XP</span>
+        (カテゴリごとにXPが異なる)
+      </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {CATEGORY_ORDER.map((c) => (
@@ -59,6 +62,7 @@ export function LogForm({
             }`}
           >
             {CATEGORY_LABELS[c]}
+            <span className="ml-1 text-xs opacity-70">+{CATEGORY_XP[c]}</span>
           </button>
         ))}
       </div>
