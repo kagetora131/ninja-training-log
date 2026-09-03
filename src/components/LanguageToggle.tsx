@@ -9,14 +9,14 @@ export function LanguageToggle() {
   const { language, setLanguage } = useLanguage()
 
   return (
-    <div className="flex rounded-full border border-gold/30 p-0.5 text-xs">
+    <div className="flex shrink-0 rounded-full border border-gold/30 p-0.5 text-xs">
       {OPTIONS.map((opt) => (
         <button
           key={opt.value}
           type="button"
           onClick={() => setLanguage(opt.value)}
           aria-pressed={language === opt.value}
-          className={`rounded-full px-2.5 py-1 transition ${
+          className={`whitespace-nowrap rounded-full px-2.5 py-1 transition ${
             language === opt.value
               ? 'bg-gold text-void'
               : 'text-paper-dim hover:text-paper'

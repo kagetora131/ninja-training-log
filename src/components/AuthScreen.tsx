@@ -37,7 +37,7 @@ export function AuthScreen() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-8 shadow-2xl">
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h1 className="font-mincho text-2xl font-bold tracking-wide text-paper">忍者修行ログ</h1>
             <p className="mt-1 text-sm text-paper-dim">{dict.auth.tagline}</p>
           </div>
