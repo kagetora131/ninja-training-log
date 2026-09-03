@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { CATEGORY_DEFAULT_UNITS, CATEGORY_LABELS, CATEGORY_ORDER, CATEGORY_XP } from '../lib/rank'
+import { CATEGORY_ORDER, CATEGORY_XP } from '../lib/rank'
+import { CATEGORY_LABELS, CATEGORY_UNITS, useLanguage } from '../lib/i18n'
 import type { TrainingCategory } from '../types'
 import type { NewLogInput } from '../hooks/useTrainingLogs'
 
@@ -8,23 +9,27 @@ export function LogForm({
 }: {
   onSubmit: (input: NewLogInput) => Promise<{ error: string | null }>
 }) {
+  const { language, dict } = useLanguage()
+  const categoryLabels = CATEGORY_LABELS[language]
+  const categoryUnits = CATEGORY_UNITS[language]
+
   const [category, setCategory] = useState<TrainingCategory>('exercise')
   const [amount, setAmount] = useState('30')
-  const [unit, setUnit] = useState(CATEGORY_DEFAULT_UNITS.exercise)
+  const [unit, setUnit] = useState(categoryUnits.exercise)
   const [memo, setMemo] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   function handleCategoryChange(next: TrainingCategory) {
     setCategory(next)
-    setUnit(CATEGORY_DEFAULT_UNITS[next])
+    setUnit(categoryUnits[next])
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const numericAmount = Number(amount)
     if (!numericAmount || numericAmount <= 0) {
-      setError('回数・時間は1以上の数値で入力してください。')
+      setError(dict.logForm.amountError)
       return
     }
     setError(null)
@@ -43,10 +48,10 @@ export function LogForm({
       onSubmit={handleSubmit}
       className="animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-6"
     >
-      <h2 className="font-mincho text-lg font-bold text-paper">今日の修行を記録する</h2>
+      <h2 className="font-mincho text-lg font-bold text-paper">{dict.logForm.heading}</h2>
       <p className="mt-1 text-xs text-paper-dim">
-        この記録で <span className="text-gold">+{CATEGORY_XP[category]} XP</span>
-        (カテゴリごとにXPが異なる)
+        {dict.logForm.xpPrefix} <span className="text-gold">+{CATEGORY_XP[category]} XP</span>{' '}
+        {dict.logForm.xpSuffix}
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -61,7 +66,7 @@ export function LogForm({
                 : 'border-gold/30 text-paper-dim hover:border-gold hover:text-paper'
             }`}
           >
-            {CATEGORY_LABELS[c]}
+            {categoryLabels[c]}
             <span className="ml-1 text-xs opacity-70">+{CATEGORY_XP[c]}</span>
           </button>
         ))}
@@ -69,7 +74,7 @@ export function LogForm({
 
       <div className="mt-4 flex gap-3">
         <label className="flex flex-1 flex-col gap-1 text-sm text-paper-dim">
-          時間・回数
+          {dict.logForm.amountLabel}
           <input
             type="number"
             min={0}
@@ -81,7 +86,7 @@ export function LogForm({
           />
         </label>
         <label className="flex w-28 flex-col gap-1 text-sm text-paper-dim">
-          単位
+          {dict.logForm.unitLabel}
           <input
             type="text"
             required
@@ -93,13 +98,13 @@ export function LogForm({
       </div>
 
       <label className="mt-3 flex flex-col gap-1 text-sm text-paper-dim">
-        メモ(任意)
+        {dict.logForm.memoLabel}
         <textarea
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
           rows={2}
           className="resize-none rounded-md border border-gold/30 bg-void px-3 py-2 text-paper outline-none focus:border-gold"
-          placeholder="例: ランニング5km、参考書10ページなど"
+          placeholder={dict.logForm.memoPlaceholder}
         />
       </label>
 
@@ -110,7 +115,7 @@ export function LogForm({
         disabled={submitting}
         className="mt-4 w-full rounded-md bg-seal py-2 font-semibold text-paper transition hover:bg-seal-bright disabled:opacity-50"
       >
-        記録する
+        {dict.logForm.submit}
       </button>
     </form>
   )

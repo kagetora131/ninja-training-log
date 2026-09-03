@@ -1,7 +1,10 @@
 import { useAuth } from '../hooks/useAuth'
+import { useLanguage } from '../lib/i18n'
+import { LanguageToggle } from './LanguageToggle'
 
 export function Header() {
   const { session, signOut } = useAuth()
+  const { dict } = useLanguage()
 
   return (
     <header className="flex items-center justify-between border-b border-gold/20 px-4 py-4 sm:px-8">
@@ -12,13 +15,14 @@ export function Header() {
         <p className="text-xs text-paper-dim">Ninja Training Log</p>
       </div>
       <div className="flex items-center gap-3 text-sm text-paper-dim">
+        <LanguageToggle />
         <span className="hidden sm:inline">{session?.user.email}</span>
         <button
           type="button"
           onClick={() => signOut()}
           className="rounded-md border border-gold/30 px-3 py-1.5 transition hover:border-seal-bright hover:text-paper"
         >
-          ログアウト
+          {dict.header.logout}
         </button>
       </div>
     </header>

@@ -1,5 +1,5 @@
 import { formatDateTime } from '../lib/format'
-import { CATEGORY_LABELS } from '../lib/rank'
+import { CATEGORY_LABELS, useLanguage } from '../lib/i18n'
 import type { TrainingLog } from '../types'
 
 export function LogList({
@@ -9,14 +9,15 @@ export function LogList({
   logs: TrainingLog[]
   onDelete: (id: string) => void
 }) {
+  const { language, dict } = useLanguage()
+  const categoryLabels = CATEGORY_LABELS[language]
+
   return (
     <div className="animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-6">
-      <h2 className="font-mincho text-lg font-bold text-paper">修行の記録</h2>
+      <h2 className="font-mincho text-lg font-bold text-paper">{dict.logList.heading}</h2>
 
       {logs.length === 0 ? (
-        <p className="mt-4 text-sm text-paper-dim">
-          まだ記録がありません。最初の修行を記録してみよう。
-        </p>
+        <p className="mt-4 text-sm text-paper-dim">{dict.logList.empty}</p>
       ) : (
         <ul className="mt-4 flex flex-col divide-y divide-gold/10">
           {logs.map((log) => (
@@ -24,7 +25,7 @@ export function LogList({
               <div className="min-w-0">
                 <div className="flex items-center gap-2 text-sm">
                   <span className="rounded-full bg-void px-2 py-0.5 text-xs text-gold">
-                    {CATEGORY_LABELS[log.category]}
+                    {categoryLabels[log.category]}
                   </span>
                   <span className="font-semibold text-paper">
                     {log.amount}
@@ -34,14 +35,16 @@ export function LogList({
                 {log.memo && (
                   <p className="mt-1 truncate text-xs text-paper-dim">{log.memo}</p>
                 )}
-                <p className="mt-1 text-xs text-paper-dim/70">{formatDateTime(log.logged_at)}</p>
+                <p className="mt-1 text-xs text-paper-dim/70">
+                  {formatDateTime(log.logged_at, language)}
+                </p>
               </div>
               <button
                 type="button"
                 onClick={() => onDelete(log.id)}
                 className="shrink-0 rounded-md border border-gold/20 px-2 py-1 text-xs text-paper-dim transition hover:border-seal-bright hover:text-seal-bright"
               >
-                削除
+                {dict.logList.delete}
               </button>
             </li>
           ))}

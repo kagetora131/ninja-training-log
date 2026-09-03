@@ -1,8 +1,11 @@
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '../hooks/useAuth'
+import { useLanguage } from '../lib/i18n'
+import { LanguageToggle } from './LanguageToggle'
 
 export function AuthScreen() {
   const { signIn, signUp } = useAuth()
+  const { dict } = useLanguage()
   const [mode, setMode] = useState<'signin' | 'signup'>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,7 +24,7 @@ export function AuthScreen() {
       if (error) {
         setError(error)
       } else {
-        setNotice('確認メールを送信しました。メール内のリンクを開いてからログインしてください。')
+        setNotice(dict.auth.signupNotice)
       }
     } else {
       const { error } = await signIn(email, password)
@@ -33,10 +36,13 @@ export function AuthScreen() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-8 shadow-2xl">
-        <h1 className="font-mincho text-2xl font-bold tracking-wide text-paper">忍者修行ログ</h1>
-        <p className="mt-1 text-sm text-paper-dim">
-          記録をつけてXPを貯め、忍者ランクを上げていこう。
-        </p>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h1 className="font-mincho text-2xl font-bold tracking-wide text-paper">忍者修行ログ</h1>
+            <p className="mt-1 text-sm text-paper-dim">{dict.auth.tagline}</p>
+          </div>
+          <LanguageToggle />
+        </div>
 
         <div className="mt-6 flex rounded-lg border border-gold/30 p-1 text-sm">
           <button
@@ -46,7 +52,7 @@ export function AuthScreen() {
             }`}
             onClick={() => setMode('signin')}
           >
-            ログイン
+            {dict.auth.tabLogin}
           </button>
           <button
             type="button"
@@ -55,13 +61,13 @@ export function AuthScreen() {
             }`}
             onClick={() => setMode('signup')}
           >
-            新規登録
+            {dict.auth.tabSignup}
           </button>
         </div>
 
         <form className="mt-6 flex flex-col gap-3" onSubmit={handleSubmit}>
           <label className="flex flex-col gap-1 text-sm text-paper-dim">
-            メールアドレス
+            {dict.auth.emailLabel}
             <input
               type="email"
               required
@@ -72,7 +78,7 @@ export function AuthScreen() {
             />
           </label>
           <label className="flex flex-col gap-1 text-sm text-paper-dim">
-            パスワード
+            {dict.auth.passwordLabel}
             <input
               type="password"
               required
@@ -92,7 +98,7 @@ export function AuthScreen() {
             disabled={submitting}
             className="mt-2 rounded-md bg-seal py-2 font-semibold text-paper transition hover:bg-seal-bright disabled:opacity-50"
           >
-            {mode === 'signup' ? '登録する' : 'ログイン'}
+            {mode === 'signup' ? dict.auth.submitSignup : dict.auth.submitLogin}
           </button>
         </form>
       </div>

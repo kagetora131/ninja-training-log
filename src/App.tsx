@@ -10,6 +10,7 @@ import { WeeklyChart } from './components/WeeklyChart'
 import { useAuth } from './hooks/useAuth'
 import { useProgress } from './hooks/useProgress'
 import { useTrainingLogs } from './hooks/useTrainingLogs'
+import { useLanguage } from './lib/i18n'
 
 function AppShell() {
   const { session } = useAuth()
@@ -58,11 +59,12 @@ function AppShell() {
 
 function App() {
   const { session, loading } = useAuth()
+  const { dict } = useLanguage()
 
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center text-paper-dim">
-        読み込み中...
+        {dict.common.loading}
       </div>
     )
   }
