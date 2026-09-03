@@ -21,7 +21,6 @@ export const RANKS: RankDef[] = [
   { rank: 2, requiredXp: 100 },
   { rank: 3, requiredXp: 300 },
   { rank: 4, requiredXp: 700 },
-  { rank: 5, requiredXp: 1500 },
 ]
 
 export function rankByXp(xp: number): RankDef {

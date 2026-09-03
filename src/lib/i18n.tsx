@@ -48,8 +48,9 @@ export interface Dictionary {
 }
 
 // カテゴリ名・デフォルト単位・ランク称号は言語別に切り替える表示用テキスト。
-// ランク名は「ローマ字表記のまま残す」方針(2026-08-31、ユーザー確認済み)のため、
-// 英語版でも Minarai Ninja / Genin / Chunin / Jonin / Ninja Toryo とする。
+// ランク名は下忍/中忍/上忍(Genin/Chunin/Jonin)は英語圏でも通じる語としてローマ字表記のまま残し、
+// 見習い忍者/忍者頭領は伝わりにくいため英訳する方針(2026-08-31、ユーザー確認済み)。
+// 「忍者頭領」ランク自体は2026-09-04に廃止し、上忍(Jonin)を最高ランクとした。
 export const CATEGORY_LABELS: Record<Language, Record<TrainingCategory, string>> = {
   ja: {
     exercise: '稽古',
@@ -90,14 +91,12 @@ export const RANK_TITLES: Record<Language, Record<number, string>> = {
     2: '下忍',
     3: '中忍',
     4: '上忍',
-    5: '忍者頭領',
   },
   en: {
-    1: 'Minarai Ninja',
+    1: 'Ninja Apprentice',
     2: 'Genin',
     3: 'Chunin',
     4: 'Jonin',
-    5: 'Ninja Toryo',
   },
 }
 
