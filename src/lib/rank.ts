@@ -12,21 +12,17 @@ export const CATEGORY_XP: Record<TrainingCategory, number> = {
 export interface RankDef {
   rank: number
   requiredXp: number
-  title: string
 }
 
-// DB側の calc_rank() 関数と同じ閾値(CLAUDE.mdのランク設計表に対応)
+// DB側の calc_rank() 関数と同じ閾値(CLAUDE.mdのランク設計表に対応)。
+// ランク名(表示用の言語別テキスト)は src/lib/i18n.ts の RANK_TITLES を参照する。
 export const RANKS: RankDef[] = [
-  { rank: 1, requiredXp: 0, title: '見習い忍者' },
-  { rank: 2, requiredXp: 100, title: '下忍' },
-  { rank: 3, requiredXp: 300, title: '中忍' },
-  { rank: 4, requiredXp: 700, title: '上忍' },
-  { rank: 5, requiredXp: 1500, title: '忍者頭領' },
+  { rank: 1, requiredXp: 0 },
+  { rank: 2, requiredXp: 100 },
+  { rank: 3, requiredXp: 300 },
+  { rank: 4, requiredXp: 700 },
+  { rank: 5, requiredXp: 1500 },
 ]
-
-export function rankTitle(rank: number): string {
-  return RANKS.find((r) => r.rank === rank)?.title ?? RANKS[0].title
-}
 
 export function rankByXp(xp: number): RankDef {
   let current = RANKS[0]
@@ -51,22 +47,8 @@ export function nextRankProgress(xp: number): {
   return { next, progress: Math.min(Math.max(progress, 0), 1), remaining: next.requiredXp - xp }
 }
 
-export const CATEGORY_LABELS: Record<TrainingCategory, string> = {
-  exercise: '稽古',
-  study: '学習',
-  reading: '読書',
-  meditation: '瞑想',
-  other: 'その他',
-}
-
-export const CATEGORY_DEFAULT_UNITS: Record<TrainingCategory, string> = {
-  exercise: '分',
-  study: '分',
-  reading: 'ページ',
-  meditation: '分',
-  other: '回',
-}
-
+// カテゴリのラベル・デフォルト単位(表示用の言語別テキスト)は
+// src/lib/i18n.ts の CATEGORY_LABELS / CATEGORY_UNITS を参照する。
 export const CATEGORY_ORDER: TrainingCategory[] = [
   'exercise',
   'study',

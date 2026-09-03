@@ -1,5 +1,7 @@
 import type { Session } from '@supabase/supabase-js'
 import { createContext, use, useEffect, useState, type ReactNode } from 'react'
+import { toSafeErrorMessage } from '../lib/errors'
+import { useLanguage } from '../lib/i18n'
 import { supabase } from '../lib/supabaseClient'
 
 interface AuthContextValue {
@@ -13,6 +15,7 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { language } = useLanguage()
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -31,12 +34,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signUp(email: string, password: string) {
     const { error } = await supabase.auth.signUp({ email, password })
-    return { error: error?.message ?? null }
+    return { error: toSafeErrorMessage(error?.message, language) }
   }
 
   async function signIn(email: string, password: string) {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return { error: error?.message ?? null }
+    return { error: toSafeErrorMessage(error?.message, language) }
   }
 
   async function signOut() {

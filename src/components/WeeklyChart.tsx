@@ -1,14 +1,19 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { dailyTotals } from '../lib/aggregate'
 import { formatDateLabel } from '../lib/format'
+import { useLanguage } from '../lib/i18n'
 import type { TrainingLog } from '../types'
 
 export function WeeklyChart({ logs }: { logs: TrainingLog[] }) {
-  const data = dailyTotals(logs, 7).map((d) => ({ ...d, label: formatDateLabel(d.date) }))
+  const { language, dict } = useLanguage()
+  const data = dailyTotals(logs, 7).map((d) => ({
+    ...d,
+    label: formatDateLabel(d.date, language),
+  }))
 
   return (
     <div className="animate-rise rounded-2xl border border-gold/30 bg-void-soft/80 p-6">
-      <h2 className="font-mincho text-lg font-bold text-paper">週間の推移(直近7日)</h2>
+      <h2 className="font-mincho text-lg font-bold text-paper">{dict.charts.weeklyHeading}</h2>
       <div className="mt-4 h-56">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
@@ -22,7 +27,7 @@ export function WeeklyChart({ logs }: { logs: TrainingLog[] }) {
                 borderRadius: 8,
                 color: '#ece3cf',
               }}
-              formatter={(value) => [`${value} XP`, '獲得XP']}
+              formatter={(value) => [`${value} XP`, dict.charts.xpTooltip]}
               labelFormatter={(label) => label}
             />
             <Bar dataKey="xp" fill="#b6924f" radius={[4, 4, 0, 0]} />

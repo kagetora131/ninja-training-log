@@ -1,4 +1,7 @@
+import type { Language } from './i18n'
+
 const WEEKDAY_JA = ['日', '月', '火', '水', '木', '金', '土']
+const WEEKDAY_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 /**
  * "YYYY-MM-DD" 形式の日付文字列(DBの log_date 列など)を、タイムゾーンのズレなしで
@@ -6,14 +9,15 @@ const WEEKDAY_JA = ['日', '月', '火', '水', '木', '金', '土']
  * ローカルタイムゾーンでの表示メソッド(getMonth等)と混ぜるとJSTでは1日ズレる。
  * ここでは文字列を直接分解し、UTC系メソッドのみで一貫させることでズレを防ぐ。
  */
-export function formatDateLabel(dateStr: string): string {
+export function formatDateLabel(dateStr: string, language: Language = 'ja'): string {
   const [y, m, d] = dateStr.split('-').map(Number)
   const utcDate = new Date(Date.UTC(y, m - 1, d))
-  return `${m}/${d}(${WEEKDAY_JA[utcDate.getUTCDay()]})`
+  const weekday = language === 'ja' ? WEEKDAY_JA : WEEKDAY_EN
+  return `${m}/${d}(${weekday[utcDate.getUTCDay()]})`
 }
 
-export function formatDateTime(isoString: string): string {
-  return new Intl.DateTimeFormat('ja-JP', {
+export function formatDateTime(isoString: string, language: Language = 'ja'): string {
+  return new Intl.DateTimeFormat(language === 'ja' ? 'ja-JP' : 'en-US', {
     timeZone: 'Asia/Tokyo',
     year: 'numeric',
     month: 'numeric',
