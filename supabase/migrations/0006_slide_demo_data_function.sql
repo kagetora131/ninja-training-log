@@ -1,6 +1,6 @@
 -- デモ用3ユーザー(kenta/aiko/ryo)の記録を、各ペルソナの「最終記録からの経過日数」を
 -- 保ったまま現在日付基準へスライドさせる。グラフや直近ストリークが常に生きて見えるようにする。
--- 定期実行(.github/workflows/keepalive.yml)から service_role で呼び出す想定。
+-- 実行は pg_cron が毎日担当(このファイル末尾で登録)。
 create or replace function public.slide_demo_data_to_present()
 returns void
 language plpgsql
@@ -53,3 +53,12 @@ $$;
 
 revoke execute on function public.slide_demo_data_to_present() from public, anon, authenticated;
 grant execute on function public.slide_demo_data_to_present() to service_role;
+
+-- 毎日 00:00 JST にデモデータの日付を現在基準へスライド(DB内部で完結、外部シークレット不要)
+create extension if not exists pg_cron;
+
+select cron.schedule(
+  'slide-demo-data-daily',
+  '0 15 * * *', -- 15:00 UTC = 00:00 JST
+  $$select public.slide_demo_data_to_present()$$
+);

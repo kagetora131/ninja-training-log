@@ -30,12 +30,14 @@ npm run dev
   リンクを開いてからログインする。
 - Supabase無料枠は7日間アクセスが無いとプロジェクトが自動停止されるため、
   [`.github/workflows/keepalive.yml`](.github/workflows/keepalive.yml) が3日おきに
-  REST APIへ軽いリクエストを送って停止を防ぐ。`SUPABASE_SERVICE_ROLE_KEY` を
-  リポジトリシークレットに登録すると、`slide_demo_data_to_present()` も呼び出して
-  デモデータの日付を現在基準へ自動更新する(任意)。
+  REST APIへ軽いリクエストを送って停止を防ぐ(anon keyは公開鍵なのでシークレット不要、
+  pushだけで有効になる)。
   - **注意**: GitHub Actionsのスケジュール実行は、リポジトリに60日間pushが無いと
     自動的に無効化される。長期間触らない場合は手動で `Run workflow` するか、
     Supabaseダッシュボードから復帰(Restore)させる。
+- デモデータ(kenta/aiko/ryo)の記録日付は、DB内部の **pg_cron** が毎日 00:00 JST に
+  `slide_demo_data_to_present()` を実行して現在基準へスライドする(0006マイグレーション)。
+  外部シークレット不要。ジョブ確認: `select * from cron.job;`
 
 ## データモデル
 
