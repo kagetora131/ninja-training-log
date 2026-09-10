@@ -28,6 +28,14 @@ npm run dev
   (Supabase MCPで適用したものと同一)。
 - **新規登録はメール確認が必須**(Supabaseのデフォルト設定)。登録後、届いた確認メールの
   リンクを開いてからログインする。
+- Supabase無料枠は7日間アクセスが無いとプロジェクトが自動停止されるため、
+  [`.github/workflows/keepalive.yml`](.github/workflows/keepalive.yml) が3日おきに
+  REST APIへ軽いリクエストを送って停止を防ぐ。`SUPABASE_SERVICE_ROLE_KEY` を
+  リポジトリシークレットに登録すると、`slide_demo_data_to_present()` も呼び出して
+  デモデータの日付を現在基準へ自動更新する(任意)。
+  - **注意**: GitHub Actionsのスケジュール実行は、リポジトリに60日間pushが無いと
+    自動的に無効化される。長期間触らない場合は手動で `Run workflow` するか、
+    Supabaseダッシュボードから復帰(Restore)させる。
 
 ## データモデル
 
@@ -83,13 +91,14 @@ user_progress           -- user_id, total_xp, current_rank, current_streak, long
 
 [`ninja_training_log_dummy_data.json`](ninja_training_log_dummy_data.json) を元に、Supabase上へ
 以下の3ユーザーを投入済み(パスワードは共通で `NinjaDemo2026`)。ストリーク計算・ランク判定の
-動作確認用。
+動作確認用。記録の日付は `slide_demo_data_to_present()` で現在日付基準へ自動スライドされるため、
+グラフや直近ストリークが常に「生きた」状態で見える。
 
-| メール | タイプ | 累計XP | ランク | 連続記録 |
-|---|---|---|---|---|
-| `kenta.sato@example.com` | 継続タイプ | 215 | 下忍 | 14日 |
-| `aiko.yamada@example.com` | 三日坊主タイプ | 80 | 見習い忍者 | 1日(最長2日) |
-| `ryo.tanaka@example.com` | 直近サボりタイプ | 105 | 下忍 | 7日(直近12日間記録なし) |
+| メール | タイプ | 累計XP | ランク | 連続記録 | 最終記録 |
+|---|---|---|---|---|---|
+| `kenta.sato@example.com` | 継続タイプ | 215 | 下忍 | 14日 | 今日 |
+| `aiko.yamada@example.com` | 三日坊主タイプ | 80 | 見習い忍者 | 1日(最長2日) | 2日前 |
+| `ryo.tanaka@example.com` | 直近サボりタイプ | 105 | 下忍 | 7日 | 7日前(以降記録なし) |
 
 このほか、記録が空のシンプルなデモアカウントとして `demo@ninja-training-log.invalid` /
 `NinjaDemo2026` も利用可能。

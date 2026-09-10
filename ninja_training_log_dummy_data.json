@@ -1,39 +1,41 @@
 {
   "_readme": {
     "説明": "忍者修行ログアプリの開発用ダミーデータです。継続タイプ(u01)・三日坊主タイプ(u02)・直近サボりタイプ(u03)の3ユーザーを用意し、ストリーク計算やランク判定のテストがしやすいようにしています。",
+    "備考_2026-09-10": "本番Supabaseへ投入済み。ランク5(忍者頭領)は廃止し上忍を最高ランクに変更済み。日付は slide_demo_data_to_present() 関数(.github/workflows/keepalive.yml から定期実行)で現在日付基準へ自動スライドされるため、下記 logged_at は初回投入時の相対パターンを示す参考値。",
     "rank_table": [
       {
         "rank": 1,
         "required_xp": 0,
-        "title": "見習い忍者"
+        "title": "見習い忍者",
+        "title_en": "Ninja Apprentice"
       },
       {
         "rank": 2,
         "required_xp": 100,
-        "title": "下忍"
+        "title": "下忍",
+        "title_en": "Genin"
       },
       {
         "rank": 3,
         "required_xp": 300,
-        "title": "中忍"
+        "title": "中忍",
+        "title_en": "Chunin"
       },
       {
         "rank": 4,
         "required_xp": 700,
-        "title": "上忍"
-      },
-      {
-        "rank": 5,
-        "required_xp": 1500,
-        "title": "忍者頭領"
+        "title": "上忍(最高ランク)",
+        "title_en": "Jonin (highest)"
       }
     ],
     "xp_per_category": {
-      "運動": 15,
+      "稽古": 15,
       "学習": 20,
-      "読書": 10
+      "読書": 10,
+      "瞑想": 15,
+      "その他": 10
     },
-    "基準日": "2026-08-14"
+    "基準日": "初回投入時 2026-08-14 / 以降は現在日付へ自動スライド"
   },
   "users": [
     {
