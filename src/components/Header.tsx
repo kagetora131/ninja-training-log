@@ -1,5 +1,6 @@
 import { useAuth } from '../hooks/useAuth'
 import { useLanguage } from '../lib/i18n'
+import { LanguageToggle } from './LanguageToggle'
 
 export function Header() {
   const { session, signOut } = useAuth()
@@ -14,6 +15,7 @@ export function Header() {
         <p className="text-xs text-paper-dim">Ninja Training Log</p>
       </div>
       <div className="flex items-center gap-3 text-sm text-paper-dim">
+        <LanguageToggle />
         <span className="hidden sm:inline">{session?.user.email}</span>
         <button
           type="button"
