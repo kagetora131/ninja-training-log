@@ -218,6 +218,14 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 const STORAGE_KEY = 'ninja-training-log:language'
 
 function detectInitialLanguage(): Language {
+  // URLに ?lang=ja / ?lang=en があれば最優先(ホームページの表示言語のまま
+  // アプリを開けるようにするため)。
+  try {
+    const urlLang = new URLSearchParams(window.location.search).get('lang')
+    if (urlLang === 'ja' || urlLang === 'en') return urlLang
+  } catch {
+    // ignore
+  }
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY)
     if (stored === 'ja' || stored === 'en') return stored
@@ -244,6 +252,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       // 保存に失敗しても致命的ではないため無視
     }
   }, [language])
+
+  // ?lang= で開かれた場合、初期表示には反映済みなのでURLからは消しておく。
+  useEffect(() => {
+    try {
+      const url = new URL(window.location.href)
+      if (url.searchParams.has('lang')) {
+        url.searchParams.delete('lang')
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash)
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
 
   return (
     <LanguageContext value={{ language, setLanguage, dict: DICTIONARIES[language] }}>
