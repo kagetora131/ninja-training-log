@@ -222,9 +222,16 @@ function detectInitialLanguage(): Language {
     const stored = window.localStorage.getItem(STORAGE_KEY)
     if (stored === 'ja' || stored === 'en') return stored
   } catch {
-    // localStorageが使えない環境(プライベートブラウジング等)では既定値にフォールバック
+    // localStorageが使えない環境(プライベートブラウジング等)では端末の言語設定にフォールバック
   }
-  return 'ja'
+  // 保存済みの選択が無い初回訪問時は、端末の言語設定から自動判定する。
+  // 日本語系(ja, ja-JP等)以外は全て英語をデフォルトにする
+  // (フランス語・スペイン語など未対応言語の訪問者にも英語を表示するため)。
+  try {
+    return navigator.language.toLowerCase().startsWith('ja') ? 'ja' : 'en'
+  } catch {
+    return 'ja'
+  }
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
